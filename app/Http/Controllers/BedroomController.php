@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BedroomResource;
 use App\Models\Bedroom;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class BedroomController extends Controller
      */
     public function index()
     {
-        //
+        $bedrooms = Bedroom::paginate();
+
+        return BedroomResource::collection($bedrooms);
     }
 
     /**
@@ -28,7 +31,7 @@ class BedroomController extends Controller
      */
     public function show(Bedroom $bedroom)
     {
-        //
+        return BedroomResource::make($bedroom);
     }
 
     /**

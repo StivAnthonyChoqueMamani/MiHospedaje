@@ -23,3 +23,4 @@ Route::get('bedrooms', [BedroomController::class, 'index'])->name('bedrooms.inde
 Route::get('bedrooms/{bedroom}', [BedroomController::class, 'show'])->name('bedrooms.show');
 Route::post('bedrooms', [BedroomController::class, 'store'])->name('bedrooms.store');
 Route::patch('bedrooms/{bedroom}', [BedroomController::class, 'update'])->name('bedrooms.update');
+Route::delete('bedrooms/{bedroom}', [BedroomController::class, 'destroy'])->name('bedrooms.destroy');

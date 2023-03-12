@@ -56,6 +56,8 @@ class BedroomController extends Controller
      */
     public function destroy(Bedroom $bedroom)
     {
-        //
+        $bedroom->delete();
+
+        return response()->noContent();
     }
 }

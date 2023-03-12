@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('bedrooms', function (Blueprint $table) {
             $table->id();
-            $table->string('name',10)->unique();
+            $table->string('name', 10)->unique();
             $table->text('description');
             $table->integer('price');
             $table->text('observation')->nullable();
-            $table->string('status',20)->default('disponible');
+            $table->string('status', 20)->default('disponible');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

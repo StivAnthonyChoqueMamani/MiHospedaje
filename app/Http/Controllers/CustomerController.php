@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::paginate();
+
+        return CustomerResource::collection($customers);
     }
 
     /**
@@ -28,7 +31,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        return CustomerResource::make($customer);
     }
 
     /**

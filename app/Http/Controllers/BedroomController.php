@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveBedroomRequest;
 use App\Http\Resources\BedroomResource;
 use App\Models\Bedroom;
 use Illuminate\Http\Request;
@@ -21,9 +22,13 @@ class BedroomController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SaveBedroomRequest $request)
     {
-        //
+        $bedroomData = $request->getAttributes();
+
+        $bedroom = Bedroom::create($bedroomData);
+
+        return BedroomResource::make($bedroom);
     }
 
     /**

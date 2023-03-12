@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('bedrooms', [BedroomController::class, 'index'])->name('bedrooms.index');
 Route::get('bedrooms/{bedroom}', [BedroomController::class, 'show'])->name('bedrooms.show');
+Route::post('bedrooms', [BedroomController::class, 'store'])->name('bedrooms.store');

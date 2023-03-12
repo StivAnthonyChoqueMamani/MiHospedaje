@@ -51,11 +51,4 @@ class CustomerController extends Controller
         return CustomerResource::make($customer);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Customer $customer)
-    {
-        //
-    }
 }

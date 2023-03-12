@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveCustomerRequest;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\Request;
@@ -21,9 +22,13 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SaveCustomerRequest $request)
     {
-        //
+        $customerData = $request->getAttributes();
+
+        $customer = Customer::create($customerData);
+
+        return CustomerResource::make($customer);
     }
 
     /**

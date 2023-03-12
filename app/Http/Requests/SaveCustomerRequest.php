@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveCustomerRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class SaveCustomerRequest extends FormRequest
         return [
             'data.attributes.name' => ['required'],
             'data.attributes.lastname' => ['required'],
-            'data.attributes.dni' => ['required', 'unique:customers,dni'],
+            'data.attributes.dni' => ['required', Rule::unique('customers', 'dni')->ignore($this->route('customer'))],
             'data.attributes.observation' => [],
         ];
     }

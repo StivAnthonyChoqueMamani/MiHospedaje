@@ -42,9 +42,13 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
+    public function update(SaveCustomerRequest $request, Customer $customer)
     {
-        //
+        $customerData = $request->getAttributes();
+
+        $customer->update($customerData);
+
+        return CustomerResource::make($customer);
     }
 
     /**

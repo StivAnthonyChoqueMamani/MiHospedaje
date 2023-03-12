@@ -42,9 +42,13 @@ class BedroomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bedroom $bedroom)
+    public function update(SaveBedroomRequest $request, Bedroom $bedroom)
     {
-        //
+        $bedroomData = $request->getAttributes();
+
+        $bedroom->update($bedroomData);
+
+        return BedroomResource::make($bedroom);
     }
 
     /**

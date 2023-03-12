@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveBedroomRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class SaveBedroomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.attributes.name' => ['required', 'unique:bedrooms,name'],
+            'data.attributes.name' => ['required', Rule::unique('bedrooms', 'name')->ignore($this->route('bedroom'))],
             'data.attributes.description' => ['required'],
             'data.attributes.price' => ['required', 'numeric', 'min:0'],
             'data.attributes.observation' => [],

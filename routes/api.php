@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
+Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
+Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::patch('customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');

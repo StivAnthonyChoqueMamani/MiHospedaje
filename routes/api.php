@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BedroomController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('bedrooms', [BedroomController::class, 'index'])->name('bedrooms.index');
+Route::get('bedrooms/{bedroom}', [BedroomController::class, 'show'])->name('bedrooms.show');
+Route::post('bedrooms', [BedroomController::class, 'store'])->name('bedrooms.store');
+Route::patch('bedrooms/{bedroom}', [BedroomController::class, 'update'])->name('bedrooms.update');
+Route::delete('bedrooms/{bedroom}', [BedroomController::class, 'destroy'])->name('bedrooms.destroy');
 
 Route::get('customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
 Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');

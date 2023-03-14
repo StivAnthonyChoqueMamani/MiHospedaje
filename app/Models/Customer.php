@@ -11,6 +11,11 @@ class Customer extends Model
 
     protected $guarded = [];
 
+    public function getRouteKeyName()
+    {
+        return 'dni';
+    }
+
     public function logbooks()
     {
         return $this->hasMany(Logbook::class);

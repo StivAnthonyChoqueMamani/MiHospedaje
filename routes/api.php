@@ -34,3 +34,4 @@ Route::patch('customers/{customer}', [CustomerController::class, 'update'])->nam
 
 Route::get('logbooks/{logbook}', [LogbookController::class, 'show'])->name('logbooks.show');
 Route::get('logbooks', [LogbookController::class, 'index'])->name('logbooks.index');
+Route::post('logbooks', [LogbookController::class, 'store'])->name('logbooks.store');

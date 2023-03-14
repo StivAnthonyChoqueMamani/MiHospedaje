@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LogbookResource;
 use App\Models\Logbook;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class LogbookController extends Controller
      */
     public function index()
     {
-        //
+        $logbooks = Logbook::jsonPaginate();
+
+        return LogbookResource::collection($logbooks);
     }
 
     /**
@@ -28,7 +31,7 @@ class LogbookController extends Controller
      */
     public function show(Logbook $logbook)
     {
-        //
+        return LogbookResource::make($logbook);
     }
 
     /**

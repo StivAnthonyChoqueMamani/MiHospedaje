@@ -25,11 +25,10 @@ class LogbookResource extends JsonResource
         ];
     }
 
-    // public function getRelationshipLinks(): array
-    // {
-    //     return [
-    //         'customer', 'user'
-    //     ];
-    // }
-
+    public function getRelationshipLinks(): array
+    {
+        return [
+            'customer'
+        ];
+    }
 }

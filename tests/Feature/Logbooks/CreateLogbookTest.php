@@ -32,6 +32,11 @@ class CreateLogbookTest extends TestCase
             'reservation' => false,
             'observation' => null,
         ]);
+
+        $this->assertDatabaseHas('logbooks', [
+            'customer_id' => Customer::first()->id,
+            'id' => $logbook->id,
+        ]);
     }
 
     /** @test */

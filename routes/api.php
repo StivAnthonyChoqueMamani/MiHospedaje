@@ -3,6 +3,7 @@
 use App\Http\Controllers\BedroomController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\LogbookController;
+use App\Http\Controllers\LogbookCustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,6 @@ Route::patch('customers/{customer}', [CustomerController::class, 'update'])->nam
 Route::get('logbooks/{logbook}', [LogbookController::class, 'show'])->name('logbooks.show');
 Route::get('logbooks', [LogbookController::class, 'index'])->name('logbooks.index');
 Route::post('logbooks', [LogbookController::class, 'store'])->name('logbooks.store');
+
+Route::get('logbooks/{logbook}/relationships/customer', [LogbookCustomerController::class, 'index'])->name('logbooks.relationships.customer');
+Route::get('logbooks/{logbook}/customer', [LogbookCustomerController::class, 'show'])->name('logbooks.customer');

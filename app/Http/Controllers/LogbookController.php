@@ -55,9 +55,13 @@ class LogbookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Logbook $logbook)
+    public function update(SaveLogbookRequest $request, Logbook $logbook)
     {
-        //
+        $logbookData = $request->getAttributes();
+
+        $logbook->update($logbookData);
+
+        return LogbookResource::make($logbook);
     }
 
     /**

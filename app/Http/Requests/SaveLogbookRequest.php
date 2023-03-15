@@ -25,20 +25,22 @@ class SaveLogbookRequest extends FormRequest
         return [
             'data.attributes.entry_at' => [
                 Rule::requiredIf(
-                    $this->data['attributes']['reservation'] == true
+                    $this->data['attributes']['reservation'] === true
                 ),
                 'date',
             ],
             'data.attributes.exit_at' => [
                 Rule::requiredIf(
-                    $this->data['attributes']['reservation'] == true
+                    $this->data['attributes']['reservation'] === true
                 ),
                 'date',
             ],
             'data.attributes.reservation' => ['boolean', 'required'],
             'data.attributes.observation' => [],
             'data.relationships.customer.data.id' => [
-                'required',
+                Rule::requiredIf(
+                    !($this->method() === 'PATCH')
+                ),
                 'exists:customers,dni'
             ],
         ];

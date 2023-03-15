@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\BedroomController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\LogbookController;
+use App\Http\Controllers\LogbookCustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +32,12 @@ Route::get('customers/{customer}', [CustomerController::class, 'show'])->name('c
 Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
 Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
 Route::patch('customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
+
+Route::get('logbooks/{logbook}', [LogbookController::class, 'show'])->name('logbooks.show');
+Route::get('logbooks', [LogbookController::class, 'index'])->name('logbooks.index');
+Route::post('logbooks', [LogbookController::class, 'store'])->name('logbooks.store');
+Route::patch('logbooks/{logbook}', [LogbookController::class, 'update'])->name('logbooks.update');
+Route::delete('logbooks/{logbook}', [LogbookController::class, 'destroy'])->name('logbooks.destroy');
+
+Route::get('logbooks/{logbook}/relationships/customer', [LogbookCustomerController::class, 'index'])->name('logbooks.relationships.customer');
+Route::get('logbooks/{logbook}/customer', [LogbookCustomerController::class, 'show'])->name('logbooks.customer');

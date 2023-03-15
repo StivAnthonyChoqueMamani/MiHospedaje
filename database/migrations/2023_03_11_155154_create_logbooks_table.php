@@ -17,8 +17,9 @@ return new class extends Migration
             $table->dateTime('exit_at')->nullable();
             $table->boolean('reservation')->default(false);
             $table->text('observation')->nullable();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('customer_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

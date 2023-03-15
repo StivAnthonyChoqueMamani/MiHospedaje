@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('observation')->nullable();
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('customer_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

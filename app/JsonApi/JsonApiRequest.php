@@ -39,7 +39,16 @@ class JsonApiRequest
     {
         return function ($relation) {
             /** @var Request $this */
-            return $this->validatedData()['relationships'][$relation]['data']['id'];
+            if (isset($this->validatedData()['relationships'][$relation]['data'][0]['id'])) {
+                foreach ($this->validatedData()['relationships'][$relation]['data'] as $value) {
+                    $id[] = $value['id'];
+                }
+                return $id;
+            }
+            if (isset($this->validatedData()['relationships'][$relation]['data']['id'])) {
+                return $this->validatedData()['relationships'][$relation]['data']['id'];
+            }
+            return $this->validatedData()['relationships'][$relation]['data'];
         };
     }
 

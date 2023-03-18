@@ -58,10 +58,23 @@ class Document extends Collection
     public function relationshipData(array $relationships): Document
     {
         foreach ($relationships as $key => $relationship) {
-            $this->items['data']['relationships'][$key]['data'] = [
-                'type' => $relationship->getResourceType(),
-                'id' => $relationship->getRouteKey(),
-            ];
+            if ($relationship->items != null) {
+                if (count($relationship) === 0) {
+                    $this->items['data']['relationships'][$key]['data'] = [];
+                    break;
+                }
+                foreach ($relationship as $relations) {
+                    $this->items['data']['relationships'][$key]['data'][] = [
+                        'type' => $relations->getResourceType(),
+                        'id' => $relations->getRouteKey(),
+                    ];
+                }
+            } else {
+                $this->items['data']['relationships'][$key]['data'] = [
+                    'type' => $relationship->getResourceType(),
+                    'id' => $relationship->getRouteKey(),
+                ];
+            }
         }
 
         return $this;

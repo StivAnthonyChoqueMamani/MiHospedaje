@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BedroomController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\LogbookBedroomController;
 use App\Http\Controllers\LogbookController;
 use App\Http\Controllers\LogbookCustomerController;
 use Illuminate\Http\Request;
@@ -41,3 +42,6 @@ Route::delete('logbooks/{logbook}', [LogbookController::class, 'destroy'])->name
 
 Route::get('logbooks/{logbook}/relationships/customer', [LogbookCustomerController::class, 'index'])->name('logbooks.relationships.customer');
 Route::get('logbooks/{logbook}/customer', [LogbookCustomerController::class, 'show'])->name('logbooks.customer');
+Route::get('logbooks/{logbook}/relationships/bedrooms', [LogbookBedroomController::class, 'index'])->name('logbooks.relationships.bedrooms');
+Route::get('logbooks/{logbook}/bedrooms', [LogbookBedroomController::class, 'show'])->name('logbooks.bedrooms');
+Route::patch('logbooks/{logbook}/relationships/bedrooms', [LogbookBedroomController::class, 'update']);

@@ -14,13 +14,22 @@ class CreateLogbookTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_create_logbook(): void
+    public function can_create_logbook_101(): void
     {
+        $bedrooms = Bedroom::factory(2)->create();
+
+        $mis_bedroom['data'][0]['model'] = $bedrooms[0];
+        $mis_bedroom['data'][0]['pivot']['additional_charge'] = 5;
+
+        $mis_bedroom['data'][1]['model'] = $bedrooms[1];
+        $mis_bedroom['data'][1]['pivot']['additional_charge'] = 0;
+
         $response = $this->postJson(route('api.v1.logbooks.store'), [
             'reservation' => false,
             'observation' => null,
             '_relationships' => [
                 'customer' => Customer::factory()->create(),
+                'bedrooms' => $mis_bedroom,
             ],
         ])->assertCreated();
 
@@ -37,11 +46,25 @@ class CreateLogbookTest extends TestCase
             'customer_id' => Customer::first()->id,
             'id' => $logbook->id,
         ]);
+
+        $this->assertDatabaseHas('bedroom_logbook', [
+            'bedroom_id' => $bedrooms[0]->id,
+            'logbook_id' => $logbook->id,
+            'additional_charge' => 5,
+        ]);
     }
 
     /** @test */
     public function can_create_logbook_of_reservation_type()
     {
+        $bedrooms = Bedroom::factory(2)->create();
+
+        $mis_bedroom['data'][0]['model'] = $bedrooms[0];
+        $mis_bedroom['data'][0]['pivot']['additional_charge'] = 5;
+
+        $mis_bedroom['data'][1]['model'] = $bedrooms[1];
+        $mis_bedroom['data'][1]['pivot']['additional_charge'] = 0;
+
         $response = $this->postJson(route('api.v1.logbooks.store'), [
             'entry_at' => '2023-05-10',
             'exit_at' => '2023-05-13',
@@ -49,6 +72,7 @@ class CreateLogbookTest extends TestCase
             'observation' => 'El cliente pago el 50%.',
             '_relationships' => [
                 'customer' => Customer::factory()->create(),
+                'bedrooms' => $mis_bedroom,
             ],
         ])->assertCreated();
 

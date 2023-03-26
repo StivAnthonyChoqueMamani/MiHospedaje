@@ -43,6 +43,11 @@ class SaveLogbookRequest extends FormRequest
                 ),
                 'exists:customers,dni'
             ],
+            'data.relationships.bedrooms.data.*.id' => [
+                'required',
+                'exists:bedrooms,name',
+            ],
+            'data.relationships.bedrooms' => []
         ];
     }
 }

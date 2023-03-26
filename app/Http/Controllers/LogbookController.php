@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveLogbookRequest;
 use App\Http\Resources\LogbookResource;
+use App\Models\Bedroom;
 use App\Models\Customer;
 use App\Models\Logbook;
 use Illuminate\Http\Request;
@@ -28,6 +29,8 @@ class LogbookController extends Controller
     {
         $logbookData = $request->getAttributes();
         $customerDNI = $request->getRelationshipId('customer');
+        $bedroomNames = $request->getRelationshipId('bedrooms');
+
         $logbookData['customer_id'] = Customer::where('dni', $customerDNI)->first()->id;
 
         if ($logbookData['reservation']) {
@@ -39,6 +42,13 @@ class LogbookController extends Controller
             $logbook->observation = $logbookData['observation'];
             $logbook->customer_id = $logbookData['customer_id'];
             $logbook->save();
+        }
+
+        foreach ($bedroomNames as $item) {
+            $bedroom = Bedroom::where('name', $item['id'])->first();
+            $logbook->bedrooms()->attach($bedroom, [
+                'additional_charge' => $item['pivot']['additional_charge'],
+            ]);
         }
 
         return LogbookResource::make($logbook);

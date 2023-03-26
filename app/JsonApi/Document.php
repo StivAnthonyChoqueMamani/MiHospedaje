@@ -58,22 +58,46 @@ class Document extends Collection
     public function relationshipData(array $relationships): Document
     {
         foreach ($relationships as $key => $relationship) {
-            if ($relationship->items != null) {
-                if (count($relationship) === 0) {
+            if (is_array($relationship)) {
+                if (empty($relationship)) {
                     $this->items['data']['relationships'][$key]['data'] = [];
                     break;
-                }
-                foreach ($relationship as $relations) {
-                    $this->items['data']['relationships'][$key]['data'][] = [
-                        'type' => $relations->getResourceType(),
-                        'id' => $relations->getRouteKey(),
-                    ];
+                } else {
+                    foreach ($relationship['data'] as $relations) {
+                        if (isset($relations['pivot'])) {
+                            $variable = [
+                                'type' => $relations['model']->getResourceType(),
+                                'id' => $relations['model']->getRouteKey(),
+                                'pivot' => $relations['pivot']
+                            ];
+                        } else {
+                            $variable = [
+                                'type' => $relations['model']->getResourceType(),
+                                'id' => $relations['model']->getRouteKey(),
+                            ];
+                        }
+
+                        $this->items['data']['relationships'][$key]['data'][] = $variable;
+                    }
                 }
             } else {
-                $this->items['data']['relationships'][$key]['data'] = [
-                    'type' => $relationship->getResourceType(),
-                    'id' => $relationship->getRouteKey(),
-                ];
+                if (property_exists($relationship, 'items')) {
+                    if (count($relationship) === 0) {
+                        $this->items['data']['relationships'][$key]['data'] = [];
+                        break;
+                    }
+                    foreach ($relationship as $relations) {
+                        $this->items['data']['relationships'][$key]['data'][] = [
+                            'type' => $relations->getResourceType(),
+                            'id' => $relations->getRouteKey(),
+                        ];
+                    }
+                } else {
+                    $this->items['data']['relationships'][$key]['data'] = [
+                        'type' => $relationship->getResourceType(),
+                        'id' => $relationship->getRouteKey(),
+                    ];
+                }
             }
         }
 

@@ -81,7 +81,7 @@ class BedroomsRelationshipTest extends TestCase
     public function can_update_the_associate_bedrooms()
     {
         $bedrooms = Bedroom::factory(3)->create();
-
+        
         $logbook = Logbook::factory()->create();
 
         $mis_bedroom[0]['type'] = 'bedrooms';

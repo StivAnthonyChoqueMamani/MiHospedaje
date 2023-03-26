@@ -41,7 +41,14 @@ class JsonApiRequest
             /** @var Request $this */
             if (isset($this->validatedData()['relationships'][$relation]['data'][0]['id'])) {
                 foreach ($this->validatedData()['relationships'][$relation]['data'] as $value) {
-                    $id[] = $value['id'];
+                    if(isset($value['pivot'])){
+                        $id[] = [
+                            'id' => $value['id'],
+                            'pivot' => $value['pivot']
+                        ];
+                    }else{
+                        $id[] = $value['id'];
+                    }
                 }
                 return $id;
             }

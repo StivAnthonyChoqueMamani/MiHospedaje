@@ -86,12 +86,11 @@ class BedroomsRelationshipTest extends TestCase
 
         $mis_bedroom[0]['type'] = 'bedrooms';
         $mis_bedroom[0]['id'] = (string)$bedrooms[0]->getRouteKey();
-        $mis_bedroom[0]['pivot_additional_charge'] = 5;
+        $mis_bedroom[0]['pivot']['additional_charge'] = 5;
 
         $mis_bedroom[1]['type'] = 'bedrooms';
         $mis_bedroom[1]['id'] = (string)$bedrooms[1]->getRouteKey();
-        $mis_bedroom[1]['pivot_additional_charge'] = 0;
-        
+        $mis_bedroom[1]['pivot']['additional_charge'] = 0;
         $url = route('api.v1.logbooks.relationships.bedrooms', $logbook);
 
         $response = $this->patchJson($url, [

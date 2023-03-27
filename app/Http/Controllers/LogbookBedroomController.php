@@ -32,7 +32,7 @@ class LogbookBedroomController extends Controller
         foreach($requestData as $value)
         {
             $bedroom = Bedroom::where('name',$value['id'])->first();
-            $logbook->bedrooms()->attach($bedroom,['additional_charge' => $value['pivot_additional_charge']]);
+            $logbook->bedrooms()->attach($bedroom,['additional_charge' => $value['pivot']['additional_charge']]);
         }
 
         return BedroomResource::identifiers($logbook->bedrooms);

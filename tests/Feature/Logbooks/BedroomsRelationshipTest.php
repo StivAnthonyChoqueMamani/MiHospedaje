@@ -81,20 +81,28 @@ class BedroomsRelationshipTest extends TestCase
     public function can_update_the_associate_bedrooms()
     {
         $bedrooms = Bedroom::factory(3)->create();
-        
+
         $logbook = Logbook::factory()->create();
 
-        $mis_bedroom[0]['type'] = 'bedrooms';
-        $mis_bedroom[0]['id'] = (string)$bedrooms[0]->getRouteKey();
-        $mis_bedroom[0]['pivot']['additional_charge'] = 5;
-
-        $mis_bedroom[1]['type'] = 'bedrooms';
-        $mis_bedroom[1]['id'] = (string)$bedrooms[1]->getRouteKey();
-        $mis_bedroom[1]['pivot']['additional_charge'] = 0;
         $url = route('api.v1.logbooks.relationships.bedrooms', $logbook);
 
         $response = $this->patchJson($url, [
-            'data' => $mis_bedroom,
+            'data' => [
+                [
+                    'type' => 'bedrooms',
+                    'id' => (string)$bedrooms[0]->getRouteKey(),
+                    'pivot' => [
+                        'additional_charge' => 5
+                    ]
+                ],
+                [
+                    'type' => 'bedrooms',
+                    'id' => (string)$bedrooms[1]->getRouteKey(),
+                    'pivot' => [
+                        'additional_charge' => 0
+                    ]
+                ],
+            ],
         ])->assertOk();
 
         $logbook->bedrooms->map(fn ($bedroom) => $response->assertJsonFragment([

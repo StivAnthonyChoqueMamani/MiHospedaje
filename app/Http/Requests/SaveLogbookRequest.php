@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Closure;
 
 class SaveLogbookRequest extends FormRequest
 {
@@ -28,6 +29,16 @@ class SaveLogbookRequest extends FormRequest
                     $this->data['attributes']['reservation'] === true
                 ),
                 'date',
+                function (string $attribute, mixed $value, Closure $fail) {
+                    $dayCurrent = now()->format('d');
+                    if (now()->format('H') <= 6) {
+                        $dayCurrent = now()->subDay()->format('d');
+                    }
+
+                    if (date("d", strtotime($value)) === $dayCurrent) {
+                        $fail("No se puede realizar reservas en el mismo dia que van a entrar, mejor realiza un alquiler de habitación normal.");
+                    }
+                }
             ],
             'data.attributes.exit_at' => [
                 Rule::requiredIf(
